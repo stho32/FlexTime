@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Overtime Calculator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Overtime Calculator</h2>
+        <form>
+            <div class="form-group">
+                <label for="fromDate">From (Date):</label>
+                <input type="date" class="form-control" id="fromDate">
+            </div>
+            <div class="form-group">
+                <label for="toDate">To (Date):</label>
+                <input type="date" class="form-control" id="toDate">
+            </div>
+            <div class="form-group">
+                <label for="personalHoliday">Days Personal Holiday:</label>
+                <input type="number" class="form-control" id="personalHoliday">
+            </div>
+            <div class="form-group">
+                <label for="sickDays">Days Sick:</label>
+                <input type="number" class="form-control" id="sickDays">
+            </div>
+            <div class="form-group">
+                <label for="workedHours">Your Current Working Hours Total:</label>
+                <input type="number" class="form-control" id="workedHours">
+            </div>
+            <button type="button" class="btn btn-primary" id="calculateButton">Calculate Overtime</button>
+        </form>
+        <br>
+        <div id="results">
+            <p id="shouldWorked"></p>
+            <p id="haveWorked"></p>
+            <p id="overtime"></p>
+        </div>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
