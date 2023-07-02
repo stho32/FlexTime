@@ -3,6 +3,7 @@
 <head>
     <title>Overtime Calculator</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -37,8 +38,51 @@
             <p id="overtime"></p>
         </div>
     </div>
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        var holidays = [
+            '2023-01-01', '2023-04-07', '2023-04-10', '2023-05-01',
+            '2023-05-25', '2023-06-05', '2023-06-15', '2023-10-03',
+            '2023-10-31', '2023-12-25', '2023-12-26'
+            // Add or remove dates as needed
+        ];
+
+        var workHoursPerDay = 8;
+
+        $(document).ready(function() {
+            $('#calculateButton').click(function() {
+                var fromDate = new Date($('#fromDate').val());
+                var toDate = new Date($('#toDate').val());
+                var personalHoliday = parseInt($('#personalHoliday').val());
+                var sickDays = parseInt($('#sickDays').val());
+                var workedHours = parseInt($('#workedHours').val());
+
+                var totalDays = Math.ceil((toDate - fromDate) / (1000 * 60 * 60 * 24));
+                var weekendDays = countWeekendsAndHolidays(fromDate, toDate);
+                var workDays = totalDays - weekendDays - personalHoliday - sickDays;
+                
+                var shouldHaveWorkedHours = workDays * workHoursPerDay;
+                var overtime = workedHours - shouldHaveWorkedHours;
+                
+                $('#shouldWorked').text("You should have worked " + shouldHaveWorkedHours + " hours.");
+                $('#haveWorked').text("You have worked " + workedHours + " hours.");
+                $('#overtime').text("Your overtime is " + overtime + " hours.");
+            });
+        });
+
+        function countWeekendsAndHolidays(fromDate, toDate) {
+            var weekendDayCount = 0;
+
+            for (var d = fromDate; d <= toDate; d.setDate(d.getDate() + 1)) {
+                var dayOfWeek = d.getDay();
+                var dateString = d.toISOString().slice(0,10);
+                
+                if (dayOfWeek == 0 || dayOfWeek == 6 || holidays.includes(dateString)) {
+                    weekendDayCount++;
+                }
+            }
+            return weekendDayCount;
+        }
+    </script>
 </body>
 </html>
